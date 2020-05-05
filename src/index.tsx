@@ -7,16 +7,19 @@ import * as serviceWorker from "./serviceWorker";
 import { ClusterProvider } from "./providers/cluster";
 import { TransactionsProvider } from "./providers/transactions";
 import { AccountsProvider } from "./providers/accounts";
+import { ToastProvider } from "./providers/toast";
 
 ReactDOM.render(
   <Router>
-    <ClusterProvider>
-      <AccountsProvider>
-        <TransactionsProvider>
-          <App />
-        </TransactionsProvider>
-      </AccountsProvider>
-    </ClusterProvider>
+    <ToastProvider>
+      <ClusterProvider>
+        <AccountsProvider>
+          <TransactionsProvider>
+            <App />
+          </TransactionsProvider>
+        </AccountsProvider>
+      </ClusterProvider>
+    </ToastProvider>
   </Router>,
   document.getElementById("root")
 );
