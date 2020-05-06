@@ -1,14 +1,12 @@
 import React from "react";
-import { ToastContext } from "../providers/toast";
+import { useCurrentToast } from "../providers/toast";
 
-type ToastProps = {
-  children: React.ReactNode;
-};
+export default function Toast() {
+  const { toastMessage, setToastMessage } = useCurrentToast();
+  if (toastMessage === "") return null;
 
-// TODO: should probably be "withToast" HOC
-function Toast({ children }: ToastProps) {
-  const { toastMessage, setToastMessage } = React.useContext(ToastContext);
-  return <div>{toastMessage}</div>;
+  setTimeout(() => setToastMessage(""), 2000);
+  return toastMessage === "" ? null : (
+    <div style={{ background: "#fcc" }}>{toastMessage}</div>
+  );
 }
-
-export default Toast;

@@ -1,4 +1,5 @@
 import React, { useState, ReactNode } from "react";
+import { useCurrentToast } from "../providers/toast";
 
 type CopyableProps = {
   text: string;
@@ -21,10 +22,12 @@ function Popover({ state, bottom }: { state: State; bottom?: boolean }) {
 
 function Copyable({ bottom, text, children }: CopyableProps) {
   const [state, setState] = useState<State>("hide");
+  const { setToastMessage } = useCurrentToast();
 
   const copyToClipboard = () => navigator.clipboard.writeText(text);
   const handleClick = () =>
     copyToClipboard().then(() => {
+      setToastMessage("hey there");
       setState("copied");
       setTimeout(() => setState("hide"), 1000);
     });
