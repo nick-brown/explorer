@@ -7,8 +7,20 @@ export default function Toast() {
 
   setTimeout(() => setToastMessage(""), 2000);
   return toastMessage === "" ? null : (
-    <div className={`toast fade ${toastMessage === "" ? "hide" : "show"}`} role="alert">
-      <div className="toast-header">{toastMessage}</div>
-    </div>
+      <div
+        className={`toast fade ${toastMessage === "" ? "hide" : "show"}`}
+        role="alert"
+        style={{
+          position: "absolute",
+          top: "1em",
+          right: "2em",
+          zIndex: 1,
+          maxWidth: "350px",
+          minWidth: "230px",
+          padding: ".75rem",
+        }}
+      >
+        {toastMessage}
+      </div>
   );
 }
