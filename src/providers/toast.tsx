@@ -1,37 +1,39 @@
-import React, {
-  useState,
-  createContext,
-  ReactNode,
-  Dispatch,
-  SetStateAction,
-  useContext,
-} from "react";
+import React, { useState, useContext } from "react";
 
-interface IValue {
-  toastMessage: string;
-  setToastMessage: Dispatch<SetStateAction<string>>;
-}
-type Context = IValue | undefined;
-type ToastProviderProps = { children: ReactNode };
+type ToastProviderProps = { children: React.ReactNode };
+type State = string | undefined;
+type Dispatch = (str: string) => void;
 
-export const ToastContext = createContext<Context>(undefined);
+const StateContext = React.createContext<State>(undefined);
+const DispatchContext = React.createContext<Dispatch | undefined>(undefined);
 
 export function ToastProvider({ children }: ToastProviderProps) {
-  const [toastMessage, setToastMessage] = useState<string>("");
-  const state = {
-    toastMessage: toastMessage,
-    setToastMessage: setToastMessage,
-  };
+  const [state, dispatch] = useState<State>(undefined);
 
   return (
-    <ToastContext.Provider value={state}>{children}</ToastContext.Provider>
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        {children}
+      </DispatchContext.Provider>
+    </StateContext.Provider>
   );
 }
 
-export function useToast() {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error(`useToast must be used within a ToastProvider`);
-  }
-  return context;
+function makeUseContext<T>(ctx: React.Context<T>, ctxName: string) {
+  return () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const context = useContext(ctx);
+    if (!context) {
+      throw new Error(
+        `${ctxName} must be used within the appropriate Provider`
+      );
+    }
+    return context;
+  };
 }
+
+export const useToastMessage = makeUseContext(StateContext, "useToastMessage");
+export const useToastDispatch = makeUseContext(
+  DispatchContext,
+  "useToastDispatch"
+);
