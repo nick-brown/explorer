@@ -55,6 +55,16 @@ code {
   }
 }
 
+.toast {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  z-index: 1;
+  max-width: 350px;
+  min-width: 230px;
+  padding: .75rem;
+}
+
 .btn.input-group {
   input {
     cursor: pointer;

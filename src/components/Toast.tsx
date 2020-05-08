@@ -10,15 +10,6 @@ export default function Toast() {
       <div
         className={`toast fade ${toastMessage === "" ? "hide" : "show"}`}
         role="alert"
-        style={{
-          position: "absolute",
-          top: "1em",
-          right: "2em",
-          zIndex: 1,
-          maxWidth: "350px",
-          minWidth: "230px",
-          padding: ".75rem",
-        }}
       >
         {toastMessage}
       </div>
